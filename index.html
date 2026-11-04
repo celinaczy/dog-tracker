@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goofy's Daily Log 🐾</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for cute icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Patrick Hand / Delius for cozy headings -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Delius&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FDFBF7',
+                        warmbeige: '#F5EBE0',
+                        terracotta: '#D58C61',
+                        autumnorange: '#E07A5F',
+                        bark: '#4A3B32',
+                        sand: '#E3D5CA',
+                        softgreen: '#81B29A',
+                        heatmap0: '#F0EAE1',
+                        heatmap1: '#E3D5CA',
+                        heatmap2: '#D8976C',
+                        heatmap3: '#E07A5F',
+                        heatmap4: '#D58C61',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        cozy: ['Delius', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F8F4EC;
+            background-image: radial-gradient(#E8DFC9 0.8px, transparent 0.8px), radial-gradient(#E8DFC9 0.8px, #F8F4EC 0.8px);
+            background-size: 32px 32px;
+            background-position: 0 0, 16px 16px;
+            color: #4A3B32;
+        }
+        .watercolor-card {
+            background: #FFFDF9;
+            border: 2px solid #E6DCCD;
+            box-shadow: 0 10px 25px -5px rgba(100, 80, 60, 0.08), 0 8px 10px -6px rgba(100, 80, 60, 0.05);
+            border-radius: 1.75rem;
+        }
+        .cozy-badge {
+            background-color: #F5EBE0;
+            border: 1px solid #D8C7B5;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F0EAE1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D8C7B5;
+            border-radius: 4px;
+        }
+        .heatmap-cell {
+            transition: transform 0.15s ease, background-color 0.15s ease;
+        }
+        .heatmap-cell:hover {
+            transform: scale(1.15);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans">
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-bark text-cream px-6 py-3 rounded-2xl shadow-xl flex items-center space-x-3">
+        <i class="fa-solid fa-paw text-terracotta"></i>
+        <span id="toast-message" class="font-medium text-sm">Action recorded successfully!</span>
+    </div>
+
+    <!-- Header Section -->
+    <header class="w-full bg-warmbeige/90 backdrop-blur-md border-b border-sand shadow-sm py-4 px-4 sm:px-8 sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+
+            <!-- Logo & Title -->
+            <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-terracotta bg-cream shadow-md flex items-center justify-center">
+                    <img src="img/goof-logo.jpeg" alt="Goofy Avatar" class="w-full h-full object-cover">
+                </div>
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-cozy font-bold tracking-wide text-bark">Goofy's Daily Log 🐾</h1>
+                    <p class="text-xs sm:text-sm text-bark/70 font-medium">Goofy's diary • Walks, training & happy moments</p>
+                </div>
+            </div>
+
+            <!-- Quick Info Badges -->
+            <div class="flex flex-wrap items-center gap-2">
+                <div class="cozy-badge px-3 py-1.5 rounded-full text-xs font-semibold flex items-center space-x-2 shadow-sm">
+                    <i class="fa-solid fa-weight-scale text-terracotta"></i>
+                    <span>Weight: <strong>13.4 kg</strong></span>
+                </div>
+                <div class="cozy-badge px-3 py-1.5 rounded-full text-xs font-semibold flex items-center space-x-2 shadow-sm">
+                    <i class="fa-solid fa-dog text-autumnorange"></i>
+                    <span>Status: <strong>Happy Boy</strong></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-6xl w-full mx-auto px-4 sm:px-8 my-6 flex-grow space-y-8">
+
+        <!-- SECTION 1: Quick Action Google Forms Hub -->
+        <section>
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-xl font-cozy font-bold text-bark flex items-center space-x-2">
+                    <i class="fa-solid fa-bolt text-terracotta"></i>
+                    <span>Quick Log via Google Forms</span>
+                </h2>
+                <span class="text-xs text-bark/60">Tap any form to log new entries on mobile or desktop</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+                <!-- Walk Form -->
+                <a href="https://docs.google.com/forms" target="_blank" class="watercolor-card p-5 hover:border-terracotta hover:shadow-lg transition group flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-orange-100 text-autumnorange flex items-center justify-center mb-3 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-shoe-prints text-lg"></i>
+                        </div>
+                        <h3 class="font-cozy text-bark mb-1">Walk & Activities</h3>
+                        <p class="text-xs text-bark/70 mb-4">Log walk duration, dog park running, pee, poop & outdoor notes.</p>
+                    </div>
+                    <span class="text-xs font-semibold text-terracotta flex items-center space-x-1">
+                        <span>Open Walk Form</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </span>
+                </a>
+
+                <!-- Food Form -->
+                <a href="https://docs.google.com/forms" target="_blank" class="watercolor-card p-5 hover:border-terracotta hover:shadow-lg transition group flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center mb-3 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-bone text-lg"></i>
+                        </div>
+                        <h3 class="font-cozy text-bark text-base mb-1">Food & Snacks</h3>
+                        <p class="text-xs text-bark/70 mb-4">Log dry food measures, salmon snacks, horse chews & treats.</p>
+                    </div>
+                    <span class="text-xs font-semibold text-terracotta flex items-center space-x-1">
+                        <span>Open Food Form</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </span>
+                </a>
+
+                <!-- Training Form -->
+                <a href="https://docs.google.com/forms" target="_blank" class="watercolor-card p-5 hover:border-terracotta hover:shadow-lg transition group flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-3 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-graduation-cap text-lg"></i>
+                        </div>
+                        <h3 class="font-cozy text-bark text-base mb-1">Training Sessions</h3>
+                        <p class="text-xs text-bark/70 mb-4">Log alone time progress, stay sessions, crying notes & focus.</p>
+                    </div>
+                    <span class="text-xs font-semibold text-terracotta flex items-center space-x-1">
+                        <span>Open Training Form</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </span>
+                </a>
+
+                <!-- Weight Form -->
+                <a href="https://docs.google.com/forms" target="_blank" class="watercolor-card p-5 hover:border-terracotta hover:shadow-lg transition group flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center mb-3 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-weight-scale text-lg"></i>
+                        </div>
+                        <h3 class="font-cozy text-bark text-base mb-1">Weight & Health</h3>
+                        <p class="text-xs text-bark/70 mb-4">Log Goofy's weight check-ins in kg and general health notes.</p>
+                    </div>
+                    <span class="text-xs font-semibold text-terracotta flex items-center space-x-1">
+                        <span>Open Weight Form</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </span>
+                </a>
+
+            </div>
+        </section>
+        <!-- Top Banner Image -->
+        <div class="w-full max-w-5xl mx-auto px-4 pt-6">
+            <div class="paper-card overflow-hidden p-2">
+                <img src="img/goof-and-us.jpeg" alt="Goofy and his humans walking in autumn" class="w-full h-auto rounded-xl object-cover shadow-sm">
+            </div>
+        </div>
+        <!-- SECTION 2: GitHub-Style Walk Heatmap -->
+        <section class="watercolor-card p-6">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+                <div>
+                    <h2 class="text-xl font-cozy font-bold text-bark flex items-center space-x-2">
+                        <i class="fa-solid fa-calendar-days text-terracotta"></i>
+                        <span>Walk & Activity Heatmap</span>
+                    </h2>
+                    <p class="text-xs text-bark/70">Daily walking duration & outdoor activity intensity over the last few weeks</p>
+                </div>
+                <div class="flex items-center space-x-2 text-xs text-bark/70 bg-warmbeige px-3 py-1.5 rounded-xl border border-sand">
+                    <span>Less</span>
+                    <span class="w-3 h-3 rounded bg-heatmap0 inline-block"></span>
+                    <span class="w-3 h-3 rounded bg-heatmap1 inline-block"></span>
+                    <span class="w-3 h-3 rounded bg-heatmap2 inline-block"></span>
+                    <span class="w-3 h-3 rounded bg-heatmap3 inline-block"></span>
+                    <span class="w-3 h-3 rounded bg-heatmap4 inline-block"></span>
+                    <span>More</span>
+                </div>
+            </div>
+
+            <!-- Heatmap Grid Container -->
+            <div class="overflow-x-auto pb-2">
+                <div class="min-w-[640px]">
+                    <!-- Month headers -->
+                    <div class="flex text-[11px] font-semibold text-bark/60 mb-2 pl-6 space-x-12">
+                        <span>October 2026</span>
+                        <span>November 2026</span>
+                    </div>
+
+                    <div class="flex items-start space-x-2">
+                        <!-- Day labels -->
+                        <div class="flex flex-col justify-between text-[10px] text-bark/50 font-medium h-[112px] pt-1">
+                            <span>Mon</span>
+                            <span>Wed</span>
+                            <span>Fri</span>
+                        </div>
+
+                        <!-- Grid of days (Weeks columns) -->
+                        <div id="heatmap-grid" class="grid grid-flow-col grid-rows-7 gap-1.5">
+                            <!-- Generated dynamically via JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-4 border-t border-sand flex items-center justify-between text-xs text-bark/70">
+                <span>🔥 <strong>3 day</strong> current streak</span>
+                <span>Total walked this month: <strong>215 mins</strong></span>
+            </div>
+        </section>
+
+        <!-- SECTION 3: Detailed Dashboards (Walks, Training, Weight) -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- Walks & Elimination Log -->
+            <div class="watercolor-card p-6 lg:col-span-2 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-cozy font-bold text-bark flex items-center space-x-2">
+                            <i class="fa-solid fa-dog text-terracotta"></i>
+                            <span>Walks & Elimination Log</span>
+                        </h3>
+                        <span class="text-xs bg-warmbeige px-2.5 py-1 rounded-full font-semibold text-bark">Recent Entries</span>
+                    </div>
+                    <p class="text-xs text-bark/70 mb-4">Tracking walk times, duration, activities, and bathroom frequency.</p>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                            <thead>
+                                <tr class="border-b border-sand text-bark/60 font-semibold bg-warmbeige/50">
+                                    <th class="p-3 rounded-l-xl">Date</th>
+                                    <th class="p-3">Walk / Duration</th>
+                                    <th class="p-3">Activities</th>
+                                    <th class="p-3">Pee/Poop</th>
+                                    <th class="p-3 rounded-r-xl">Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-sand/50">
+                                <tr class="hover:bg-warmbeige/20 transition">
+                                    <td class="p-3 font-semibold text-bark">03.11.2026</td>
+                                    <td class="p-3">Morning (25m), Midday (30m), Afternoon (30m)</td>
+                                    <td class="p-3"><span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded-md text-xs font-medium">Dog park running</span></td>
+                                    <td class="p-3 text-emerald-700 font-medium">Yes / Yes</td>
+                                    <td class="p-3 text-bark/80">Poop ok</td>
+                                </tr>
+                                <tr class="hover:bg-warmbeige/20 transition">
+                                    <td class="p-3 font-semibold text-bark">02.11.2026</td>
+                                    <td class="p-3">Morning (30m), Midday (50m), Evening (20m)</td>
+                                    <td class="p-3"><span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded-md text-xs font-medium">Dog park running</span></td>
+                                    <td class="p-3 text-emerald-700 font-medium">Yes / Yes</td>
+                                    <td class="p-3 text-amber-800 font-medium">Poop a bit runny</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-sand flex items-center justify-between">
+                    <a href="https://docs.google.com/spreadsheets/d/198rl5SfY1m5PAa7Cr3veEziVW85asSC2Kbh5UX9RY3U/edit" target="_blank" class="text-xs font-semibold text-terracotta hover:underline flex items-center space-x-1">
+                        <i class="fa-solid fa-file-excel mr-1"></i> View Full Walk Spreadsheet Tab
+                    </a>
+                    <span class="text-xs text-bark/50">Synced with Google Forms</span>
+                </div>
+            </div>
+
+            <!-- Weight Tracking Card -->
+            <div class="watercolor-card p-6 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-cozy font-bold text-bark flex items-center space-x-2">
+                            <i class="fa-solid fa-weight-scale text-terracotta"></i>
+                            <span>Weight Tracker</span>
+                        </h3>
+                        <span class="text-xs bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-semibold">Healthy</span>
+                    </div>
+
+                    <div class="bg-warmbeige/60 p-5 rounded-2xl text-center mb-6 border border-sand shadow-inner">
+                        <span class="text-xs font-medium text-bark/60 uppercase tracking-wider block mb-1">Current Weight</span>
+                        <span class="text-4xl font-extrabold text-terracotta">13.4</span>
+                        <span class="text-sm font-semibold text-bark">kg</span>
+                        <span class="block text-[11px] text-bark/60 mt-1">Last measured: Nov 2, 2026</span>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center text-xs p-3 rounded-xl bg-warmbeige/40">
+                            <span class="font-medium text-bark/70">02.11.2026</span>
+                            <span class="font-bold text-bark">13.4 kg</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-sand">
+                    <a href="https://docs.google.com/forms" target="_blank" class="w-full block text-center bg-autumnorange hover:bg-terracotta text-cream py-2.5 rounded-xl text-xs font-semibold transition shadow-sm">
+                        <i class="fa-solid fa-plus mr-1"></i> Log New Weight Form
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- SECTION 4: Training Notes & Progress Dashboard -->
+        <section class="watercolor-card p-6">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+                <div>
+                    <h3 class="text-lg font-cozy font-bold text-bark flex items-center space-x-2">
+                        <i class="fa-solid fa-graduation-cap text-terracotta"></i>
+                        <span>Training Notes & Progress</span>
+                    </h3>
+                    <p class="text-xs text-bark/70">Alone time sessions, behavioral observations, and milestone logs</p>
+                </div>
+                <a href="https://docs.google.com/forms" target="_blank" class="bg-warmbeige hover:bg-sand text-bark text-xs px-4 py-2 rounded-xl font-semibold transition border border-sand">
+                    <i class="fa-solid fa-plus mr-1"></i> Add Training Log
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                <!-- Training Card Nov 3 -->
+                <div class="bg-warmbeige/40 border border-sand p-5 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-bold text-terracotta bg-cream px-2.5 py-1 rounded-lg border border-sand">03.11.2026</span>
+                            <span class="text-xs text-bark/60">Separation & Calm</span>
+                        </div>
+                        <h4 class="font-cozy text-bark text-base mb-1">Okay session • 2 mins stay alone</h4>
+                        <p class="text-xs text-bark/80 leading-relaxed">
+                            "Seems to understand... Slept, didn't get off the couch. Generally ok..."
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-sand/60 flex items-center justify-between text-[11px] text-bark/60">
+                        <span>Status: <strong class="text-emerald-700">Positive progress</strong></span>
+                        <i class="fa-solid fa-bone text-terracotta"></i>
+                    </div>
+                </div>
+
+                <!-- Training Card Nov 2 -->
+                <div class="bg-warmbeige/40 border border-sand p-5 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-bold text-terracotta bg-cream px-2.5 py-1 rounded-lg border border-sand">02.11.2026</span>
+                            <span class="text-xs text-bark/60">Alone Time & Play</span>
+                        </div>
+                        <h4 class="font-cozy text-bark text-base mb-1">5 min alone time & 'okay' session</h4>
+                        <p class="text-xs text-bark/80 leading-relaxed">
+                            "Bit of crying during, biting and crazy after 7 min stay alone session."
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-sand/60 flex items-center justify-between text-[11px] text-bark/60">
+                        <span>Status: <strong class="text-amber-700">Needs patience</strong></span>
+                        <i class="fa-solid fa-bone text-terracotta"></i>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-warmbeige border-t border-sand py-6 text-center text-xs text-bark/60 mt-auto">
+        <p>Goofy's Daily Log Dashboard • Built with 🐾 for Goofy, short blond woman & tall dark blond man in hoodies</p>
+    </footer>
+
+    <!-- JavaScript to render GitHub-style heatmap & interactivity -->
+    <script>
+        // Generate GitHub-style walk contribution heatmap using real hardcoded data
+        const heatmapGrid = document.getElementById('heatmap-grid');
+
+        // Hardcoded real walk data aggregated by date (DD.MM.YYYY)
+        // Nov 2: 30 + 50 + 30 + 20 = 130 mins
+        // Nov 3: 25 + 30 + 30 = 85 mins
+        const realWalkData = {
+            '02.11.2026': 130,
+            '03.11.2026': 85
+        };
+
+        const totalDays = 84;
+        // Fix target anchor date to Nov 3, 2026 based on your logs so it aligns nicely with your data
+        const anchorDate = new Date(2026, 10, 3); // Month is 0-indexed (10 = November)
+
+        for (let i = 0; i < totalDays; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'heatmap-cell w-3.5 h-3.5 rounded-sm cursor-pointer';
+
+            // Calculate date for this cell (working backwards from anchor date)
+            const daysAgo = totalDays - 1 - i;
+            const d = new Date(anchorDate);
+            d.setDate(anchorDate.getDate() - daysAgo);
+
+            // Format as DD.MM.YYYY to match your hardcoded keys
+            const dayStr = String(d.getDate()).padStart(2, '0');
+            const monthStr = String(d.getMonth() + 1).padStart(2, '0');
+            const yearStr = d.getFullYear();
+            const lookupKey = `${dayStr}.${monthStr}.${yearStr}`;
+
+            const displayDateStr = d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+
+            // Look up actual minutes walked for this date
+            const durationMins = realWalkData[lookupKey] || 0;
+
+            // Determine intensity level (0 to 4) based on real minutes
+            let level = 0;
+            if (durationMins > 0 && durationMins <= 40) level = 1;
+            else if (durationMins > 40 && durationMins <= 80) level = 2;
+            else if (durationMins > 80 && durationMins <= 120) level = 3;
+            else if (durationMins > 120) level = 4;
+
+            // Map level to background color classes
+            const colorClasses = ['bg-heatmap0', 'bg-heatmap1', 'bg-heatmap2', 'bg-heatmap3', 'bg-heatmap4'];
+            cell.classList.add(colorClasses[level]);
+
+            cell.title = `${displayDateStr}: ${durationMins} mins walking`;
+
+            cell.onclick = function() {
+                showToast(`Walked ${durationMins} mins on ${displayDateStr} 🐾`);
+            };
+
+            heatmapGrid.appendChild(cell);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const msgSpan = document.getElementById('toast-message');
+            msgSpan.textContent = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
